@@ -250,5 +250,11 @@
         Submit
       </button>
     </div>
+
+    <!--error msg-->
+    <div *ngIf="errorMsg" class="mt-2 alert alert-danger item" role="alert">
+      {{ errorMsg }}
+    </div>
+
   </form>
 </div>

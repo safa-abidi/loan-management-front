@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoanService } from '../loan.service';
 import { Router } from '@angular/router';
+import { LoanDemand } from '../models/loan-demand';
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.css'],
 })
-export class SurveyComponent implements OnInit{
+export class SurveyComponent implements OnInit {
   loanForm: any;
 
   loan_purpose: any;
@@ -36,7 +37,11 @@ export class SurveyComponent implements OnInit{
 
   errorMsg: string = '';
 
-  constructor(private fb: FormBuilder, private loanService: LoanService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private loanService: LoanService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loanForm = this.fb.group({
@@ -62,8 +67,30 @@ export class SurveyComponent implements OnInit{
     });
   }
 
-  onSubmit(){
-    console.log(this.loanForm.value);
+  onSubmit() {
+    let value = this.loanForm.value;
+    let demand = new LoanDemand(
+      value.loan_purpose,
+      value.guarantor,
+      value.first_name,
+      value.last_name,
+      value.birthplace,
+      value.birthdate,
+      value.phone,
+      value.applicant_street_address,
+      value.applicant_city,
+      value.applicant_zip,
+      value.cin,
+      value.basic_salary,
+      value.employment_verification_letter,
+      value.mortgage_street_address,
+      value.mortgage_city,
+      value.mortgage_zip,
+      value.used_for_business,
+      value.loan_amount,
+      value.loan_tenure
+    );
+    console.log(demand);
   }
 
   /*onSubmit(){
