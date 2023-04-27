@@ -1,5 +1,5 @@
 <div class="registration-form">
-  <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loanForm" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
     <h4>Overview</h4>
     <div class="form-group">
       <label class="block mb-2 text-sm font-medium">Loan Purpose</label>
@@ -154,8 +154,8 @@
         >Employment Verification Letter</label
       >
       <input
-        formControlName="employment_verification_letter"
-        #employment_verification_letter
+        id="formFile"
+        (change)="onFileSelected($event)"
         name="employment_verification_letter"
         type="file"
         class="form-control"

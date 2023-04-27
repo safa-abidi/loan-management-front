@@ -25,7 +25,7 @@ export class SurveyComponent implements OnInit {
   cin: any;
 
   basic_salary: any;
-  employment_verification_letter: any;
+  employment_verification_letter: File | undefined;
 
   mortgage_street_address: any;
   mortgage_city: any;
@@ -57,7 +57,7 @@ export class SurveyComponent implements OnInit {
       applicant_zip: ['', [Validators.required]],
       cin: ['', [Validators.required]],
       basic_salary: ['', [Validators.required]],
-      employment_verification_letter: ['', [Validators.required]],
+      //employment_verification_letter: ['', [Validators.required]],
       mortgage_street_address: ['', [Validators.required]],
       mortgage_city: ['', [Validators.required]],
       mortgage_zip: ['', [Validators.required]],
@@ -66,6 +66,13 @@ export class SurveyComponent implements OnInit {
       loan_tenure: ['', [Validators.required]],
     });
   }
+
+
+  onFileSelected(event: any): void {
+    this.employment_verification_letter = event.target.files[0];
+    // Do something with the file
+  }
+
 
   onSubmit() {
     let value = this.loanForm.value;
@@ -82,7 +89,7 @@ export class SurveyComponent implements OnInit {
       value.applicant_zip,
       value.cin,
       value.basic_salary,
-      value.employment_verification_letter,
+      //value.employment_verification_letter,
       value.mortgage_street_address,
       value.mortgage_city,
       value.mortgage_zip,
@@ -90,7 +97,22 @@ export class SurveyComponent implements OnInit {
       value.loan_amount,
       value.loan_tenure
     );
-    console.log(demand);
+
+    const formData = new FormData();
+    formData.append("data",this.loanForm);
+    formData.append('file', this.employment_verification_letter!, this.employment_verification_letter!.name );
+
+    this.loanService.addLoan(formData).subscribe(
+      (response: any) => {
+        console.log(response);
+        //go to home page or print a message to user
+      },
+      (error) => {
+        console.log(error);
+        this.errorMsg = "Veuillez vérifier vos identifiants"
+      }
+    );
+
   }
 
   /*onSubmit(){

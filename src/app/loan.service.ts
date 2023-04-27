@@ -9,11 +9,11 @@ import { FormGroup } from '@angular/forms';
 })
 export class LoanService {
 
-  url = "http://localhost:3000/addLoan"; //change this later
+  url = "http://localhost:3000/loan-manager/loan-process"; //change this later
 
   constructor(private httpService : HttpClient) { }
 
-  addLoan(loanDemand : FormGroup){
-    return this.httpService.post(this.url, loanDemand.value);
+  addLoan(loanDemand: FormData){
+    return this.httpService.post(this.url, loanDemand);
   }
 }
